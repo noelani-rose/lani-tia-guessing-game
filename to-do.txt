@@ -1,23 +1,23 @@
 - [✅] load required packages
 - [✅] folder structure
-- [] create html skeleton 
-    - two inputs
-    - guess submit button
-    - restart button
-    - div for total guesses
-    - div for list of tia's past guesses
-    - div for list of lani's past guesses
-- [] source in required modules to html
+- [✅] create html skeleton 
+    - two inputs [✅]
+    - guess submit button [✅]
+    - restart button [✅]
+    - div for total guesses [✅]
+    - div for list of tia's past guesses [✅]
+    - div for list of lani's past guesses [✅]
+- [✅] source in required modules to html 
 
 SERVER SIDE
-- [] require express
-- [] name bodyParser
-- [] app.use express
-- [] app.use bodyParser
-- [] app.listen 
-- [] create empty array for tia's guesses 
-- [] create empty array for lani's guesses
-- [] create random number generator to output # between 1 - 25
+- [✅] require express
+- [✅] name bodyParser
+- [✅] app.use express
+- [✅] app.use bodyParser
+- [✅] app.listen 
+- [✅] create empty array for tia's guesses 
+- [✅] create empty array for lani's guesses
+- [✅] create random number generator to output # between 1 - 25
 - [] if statement (within ran# function) to compare guess and "correct"
      answer (refer to guess who game)
      - display alerts depending on guess submission
