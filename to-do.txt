@@ -27,9 +27,8 @@ SERVER SIDE
 
 
 CLIENT SIDE 
-- [] empty array to name response of tia's guesses
-- [] empty array to name response of lani's guesses 
-- [] doc ready
+- [] empty array to name response of both responses [✅]
+- [] doc ready [✅]
 - [] onready function 
     - have event handler to run submit guess when clicked 
     - loadGuesses function to have ajax to get response from server 

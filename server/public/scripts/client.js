@@ -1,4 +1,4 @@
-let totalGuesses = [];
+let individualGuesses = [];
 
 $(document).ready(handleReady);
 
@@ -37,6 +37,8 @@ function onSubmit(evt){
   .catch((err)=>{
     console.log('POST player guesses error');
   })
+
+  render();
 }
 
 function loadGuesses(){
@@ -48,16 +50,29 @@ function loadGuesses(){
   })
       .then((response)=>{
         console.log('in GET guesses');
-        totalGuesses = response;
+        individualGuesses = response;
 
         render();
       })
   
 }
 
+let guessCounter = 1;
 function render(){
   console.log('in the render function');
-  console.log(totalGuesses);
-  $('#guessForm').empty();
-  $('body').append(`<div>This is really hard</div>`);
+  console.log(individualGuesses);
+  $('#guessList').empty();
+  $('#guessList2').empty();
+  $('.totalGuesses').text(`Total guesses: ${guessCounter++}`)
+  for(let player of individualGuesses){
+    $('#guessList').append(`<br><li>${player.player1}</li>`);
+    // <li>${player.player2}</li>`);
+    // console.log(player.player1)
+  }
+
+  for (let otherPlayer of individualGuesses){
+    $('#guessList2').append(`<br>
+    <li>${otherPlayer.player2}</li>`);
+  }
+
 }
