@@ -4,8 +4,8 @@ $(document).ready(handleReady);
 
 
 let individualGuesses = [];
-let playerOneResults;
-let playerTwoResults;
+let playerOneResults = [];
+let playerTwoResults = [];
 
 
 
@@ -13,6 +13,7 @@ function handleReady() {
   console.log("jquery is loaded!")
   
   $('.submit').on('click', onSubmit);
+  render();
 }
 
 function onSubmit(evt){
@@ -38,6 +39,8 @@ function onSubmit(evt){
     console.log('POST playerGuesses', response);
 
     loadGuesses();
+    render();
+
     
   })
 
@@ -47,13 +50,13 @@ function onSubmit(evt){
 
   receiveGuessResultsPlayerOne();
   receiveGuessResultsPlayerTwo();
-  render();
 }
 
 
 
 
 function receiveGuessResultsPlayerOne(){
+  render();
   console.log('in receiveGuessResults function player');
   $.ajax({
     url: '/guess-game-results-p1',
@@ -63,17 +66,20 @@ function receiveGuessResultsPlayerOne(){
     .then((response) =>{
       console.log('in receive Guess Results', response);
 
-      playerOneResults = response;
+      // pushing instead of just updating so it's always
+      // taking in new variables!!!
+      playerOneResults.push(response);
     })
 
     .catch((err)=>{
       console.log('GET guess results error');
     })
 
-    render();
+    
 }
 
 function receiveGuessResultsPlayerTwo(){
+  render();
   console.log('in receiveGuessResults function player 2');
   $.ajax({
     url: '/guess-game-results-p2',
@@ -83,14 +89,13 @@ function receiveGuessResultsPlayerTwo(){
     .then((response) =>{
       console.log('in receive Guess Results for Player 2', response);
 
-      playerTwoResults = response;
+      playerTwoResults.push(response);
     })
 
     .catch((err)=>{
       console.log('GET guess results error');
     })
 
-    render();
 }
 
 
@@ -129,15 +134,17 @@ function render(){
   $('#guessList').empty();
   $('#guessList2').empty();
   $('.totalGuesses').text(`Total guesses: ${guessCounter++}`)
-  for(let player of individualGuesses){
-    $('#guessList').append(`<br><li>${player.player1}</li>`);
-    // <li>${player.player2}</li>`);
-    // console.log(player.player1)
+  // changed to regular for loop
+  // to access individual elements 
+  for(let i = 0; i < individualGuesses.length; i++){
+    $('#guessList').append(`<br><li>${individualGuesses[i].player1} - ${playerOneResults[i]}</li>`);
+    
+  }
+  for (let i = 0; i < individualGuesses.length; i++){
+    $('#guessList2').append(`<br>
+    <li>${individualGuesses[i].player2} - ${playerTwoResults[i]}</li>`);
   }
 
-  for (let otherPlayer of individualGuesses){
-    $('#guessList2').append(`<br>
-    <li>${otherPlayer.player2}</li>`);
-  }
+
 
 }
