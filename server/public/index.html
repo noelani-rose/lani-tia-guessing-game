@@ -7,10 +7,48 @@
   <title>Guess A Number!</title>
   <script src="vendors/jquery.min.js"></script>
   <script src="scripts/client.js"></script>
-  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="styles/style.css">
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <h1>YOUR GAME HERE!</h1>
+
+  <div class = "tiaGuess">      
+    <h3>Tia's Guesses</h3>
+</div>
+    <ul id = "guessList">
+    </ul>
+    <br>
+  <div class = "laniGuess">
+    <h3>Lani's Guesses</h3>
+  </div>
+    <ul id = "guessList2">
+    </ul>
+
+   
+
+
+
+  <form id ="guessForm">
+    <input type = "text" id = "tiaGuess" placeholder = "Tia's Guess" label = "Tia's Guess"/>
+    <input type = "text" id = "laniGuess" placeholder = "Lani's Guess" label = "Lani's Guess"/>
+    <br>
+    <br>
+      <div class = "submit"><button id = "submitBtn">Submit Guess</button>
+      </div>
+      <br>
+      <div class = "tiaPastGuess"></div>
+      <div class = "laniPastGuess"></div>
+      <br>
+      <br>
+  </form>
+  <div class = "totalGuesses">Toatal Guesses:</div>
+<br>  
+  <button id = "restartBtn">Restart Game</button>
+
+
+
+
+
 </body>
 </html>
