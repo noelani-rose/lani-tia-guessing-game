@@ -9,14 +9,10 @@ let playerGuesses = [];
 let theRandomNumber;
 
 
-
-// This must be added before GET & POST routes.
 app.use(bodyParser.urlencoded({extended:true}));
 
-// Serve up static files (HTML, CSS, Client JS)
 app.use(express.static('server/public'));
 
-// GET & POST Routes go here
 
 
 app.listen(PORT, () => {
@@ -25,29 +21,7 @@ app.listen(PORT, () => {
   console.log('here is the random number', theRandomNumber);
 })
 
-app.get('/guess-game', (req, res)=>{
-  // console.log('guess-game GET playerguesses', playerGuesses);
-  for (let i = 0; i < playerGuesses.length; i++){
-    // console.log('this is player ones guess', playerGuesses[i].player1);
-    playerGuesses[i].player1 = Number(playerGuesses[i].player1);
-    if (theRandomNumber === playerGuesses[i].player1){
-      console.log('you\re on the right track!');
-    }
-  }
-  // playerGuesses.player1 = Number(playerGuesses.player1);
-  // playerGuesses.player2 = Number(playerGuesses.player2);
-  // console.log('is this the object as a number?', playerGuesses[0]);
-  // if (theRandomNumber === playerGuesses[i].player1){
-  //   alert('YOU ROCK!!!')
-  // }
-  // else if (theRandomNumber > playerGuesses[i].player1){
-  //   alrert('you\'re sooooo high')
-  // }
-  // else if (theRandomNumber < playerGuesses[i].player1){
-  //   alert('too slow and too low')
-  // };
-  res.send(playerGuesses);
-})
+
 
 app.post('/guess-game', (req, res)=> {
   console.log('in POST guess-game', playerGuesses )
@@ -59,12 +33,80 @@ app.post('/guess-game', (req, res)=> {
   res.sendStatus(201);
 })
 
-app.get('/guess-game-random', (req, res)=>{
-   console.log('in guess-game GET random number');
-  // let randoNumber = getRanNumber()
 
-   res.send(randoNumber);
+
+app.get('/guess-game', (req, res)=>{
+
+
+  res.send(playerGuesses);
 })
+
+app.get('/guess-game-results-p1', (req, res)=>{
+  console.log('in guess-game GET random number');
+
+  let guessResults = {
+    tooHigh: 'Your guess is too high',
+    tooLow: 'Your guess is too low',
+    rightGuess: 'You\'re spot on!!!'
+};
+
+
+  for (let i = 0; i < playerGuesses.length; i++){
+    playerGuesses[i].player1 = Number(playerGuesses[i].player1);
+    if (theRandomNumber === playerGuesses[i].player1){
+      console.log('you\'re on the right track!');
+      res.send(guessResults.rightGuess)
+    }
+    else if (theRandomNumber > playerGuesses[i].player1) {
+        console.log('too low');
+        res.send(guessResults.tooLow)
+      } else if (theRandomNumber < playerGuesses[i].player1)
+        console.log('too high');
+        res.send(guessResults.tooHigh);
+    }
+  });
+
+  app.get('/guess-game-results-p2', (req, res)=>{
+    console.log('in guess-game GET random number');
+  
+    let guessResults = {
+      tooHigh: 'Your guess is too high',
+      tooLow: 'Your guess is too low',
+      rightGuess: 'You\'re spot on!!!'
+  };
+  
+  
+    for (let i = 0; i < playerGuesses.length; i++){
+      playerGuesses[i].player2 = Number(playerGuesses[i].player2);
+      if (theRandomNumber === playerGuesses[i].player2){
+        console.log('you\'re on the right track!');
+        res.send(guessResults.rightGuess)
+      }
+      else if (theRandomNumber > playerGuesses[i].player2) {
+          console.log('too low');
+          res.send(guessResults.tooLow)
+        } else if (theRandomNumber < playerGuesses[i].player2)
+          console.log('too high');
+          res.send(guessResults.tooHigh);
+      }
+    });
+
+  // res.send(randoNumber);
+
+
+
+
+app.post('/guess-game', (req, res)=> {
+  console.log('in POST guess-game', playerGuesses )
+  
+  let newPlayerGuesses = req.body;
+
+  playerGuesses.push(newPlayerGuesses);
+
+  res.sendStatus(201);
+})
+
+
 
 function getRanNumber (){
   let ranNum = Math.floor(Math.random() * 25) + 1;

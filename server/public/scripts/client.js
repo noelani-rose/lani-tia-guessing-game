@@ -1,6 +1,13 @@
-let individualGuesses = [];
+
 
 $(document).ready(handleReady);
+
+
+let individualGuesses = [];
+let playerOneResults;
+let playerTwoResults;
+
+
 
 function handleReady() {
   console.log("jquery is loaded!")
@@ -38,8 +45,57 @@ function onSubmit(evt){
     console.log('POST player guesses error');
   })
 
+  receiveGuessResultsPlayerOne();
+  receiveGuessResultsPlayerTwo();
   render();
 }
+
+
+
+
+function receiveGuessResultsPlayerOne(){
+  console.log('in receiveGuessResults function player');
+  $.ajax({
+    url: '/guess-game-results-p1',
+    method: 'GET'
+  })
+
+    .then((response) =>{
+      console.log('in receive Guess Results', response);
+
+      playerOneResults = response;
+    })
+
+    .catch((err)=>{
+      console.log('GET guess results error');
+    })
+
+    render();
+}
+
+function receiveGuessResultsPlayerTwo(){
+  console.log('in receiveGuessResults function player 2');
+  $.ajax({
+    url: '/guess-game-results-p2',
+    method: 'GET'
+  })
+
+    .then((response) =>{
+      console.log('in receive Guess Results for Player 2', response);
+
+      playerTwoResults = response;
+    })
+
+    .catch((err)=>{
+      console.log('GET guess results error');
+    })
+
+    render();
+}
+
+
+
+
 
 function loadGuesses(){
   console.log('in loadGuesses');
@@ -52,10 +108,19 @@ function loadGuesses(){
         console.log('in GET guesses');
         individualGuesses = response;
 
+
         render();
       })
   
 }
+
+
+
+
+
+
+
+
 
 let guessCounter = 1;
 function render(){
